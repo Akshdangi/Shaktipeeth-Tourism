@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Shaktipeeth Tourism</title>
+    <link rel="stylesheet" href="style-login.css">
+    <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    body {
+      background: url('https://www.poojn.in/wp-content/uploads/2025/03/Baneswar-Shiva-Temple-A-Visitors-Guide-to-History-Significance.jpeg.jpg') no-repeat center center fixed;
+      background-size: cover;
+    }
+
+    .header {
+      background: rgba(255, 107, 107, 0.9);
+      padding: 1rem;
+      color: white;
+      text-align: center;
+      backdrop-filter: blur(2px);
+    }
+
+    .registration-form {
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+    }
+
+    input, select, textarea ,button{
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+
+    .submit-btn {
+      background: #ff6b6b;
+      color: white;
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 100%;
+      font-size: 1.1rem;
+    }
+
+    .submit-btn:hover {
+      background: #ff5252;
+    }
+
+    .required {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+    <div class="registration-form">
+        <h2>Login to Your Account</h2>
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required placeholder="Enter your email">
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required placeholder="Enter your password">
+            </div>
+
+            <button type="submit" class="btn">Login</button>
+            <p><a href="forgot-password.html">Forgot Password?</a></p>
+        </form>
+    </div>
+    
+    <script src="index.html></script>
+</body>
+</html>
+ 
