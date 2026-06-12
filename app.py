@@ -25,7 +25,7 @@ mail = Mail(app)
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Create DB tables
+# Create tables safely
 with app.app_context():
     db.create_all()
 
@@ -290,6 +290,7 @@ def book_tour():
         db.session.add(booking)
         db.session.commit()
 
+        # Optional email (safe fail)
         try:
             send_confirmation_email(booking)
         except Exception as e:
@@ -303,10 +304,7 @@ def book_tour():
 
     except Exception as e:
         logger.error(f"Booking error: {str(e)}")
-        return jsonify({
-            'success': False,
-            'message': 'Server error'
-        }), 500
+        return jsonify({'success': False, 'message': 'Server error'}), 500
 
 
 def send_confirmation_email(booking):
@@ -380,8 +378,6 @@ Warm regards,
 Shaktipeeth Tourism Team"""
     )
     mail.send(msg)
-
-
 @app.route('/api/bookings/<int:booking_id>')
 def get_booking(booking_id):
     booking = Booking.query.get_or_404(booking_id)
@@ -397,4 +393,4 @@ def get_bookings():
 # ------------------ RUN ------------------ #
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8001, debug=True)
+    app.run(host='0.0.0.0', port=int(os.environ.get("PORT", 8001)), debug=True)
