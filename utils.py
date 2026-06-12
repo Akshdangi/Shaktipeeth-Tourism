@@ -1,46 +1,70 @@
-from validate_email import validate_email # type: ignore
-import phonenumbers # type: ignore
-from datetime import datetime
+import re
 
 def validate_booking_data(data):
     errors = []
-    
-    # Validate package
-    valid_packages = ['eastern', 'northern', 'complete', 'weekend']
-    if data.get('package') not in valid_packages:
-        errors.append('Invalid package selected')
-    
-    # Validate travel date
+
+    if not data.get("package"):
+        errors.append("Package is required")
+
+    if not data.get("travel_date"):
+        errors.append("Travel date is required")
+
+    if not data.get("num_travelers"):
+        errors.append("Number of travelers is required")
+
+    if not data.get("name"):
+        errors.append("Name is required")
+
+    if not data.get("mobile"):
+        errors.append("Mobile number is required")
+
+    email = data.get("email")
+    if not email:
+        errors.append("Email is required")
+    else:
+        if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+            errors.append("Invalid email format")
+
+    return errors
+
+
+def validate_registration_data(data):
+    errors = []
+
+    if not data.get("fullname"):
+        errors.append("Full name is required")
+
     try:
-        travel_date = datetime.strptime(data.get('travel_date'), '%Y-%m-%d').date()
-        if travel_date < datetime.now().date():
-            errors.append('Travel date cannot be in the past')
-    except:
-        errors.append('Invalid travel date format')
-    
-    # Validate number of travelers
-    try:
-        num_travelers = int(data.get('num_travelers'))
-        if not 1 <= num_travelers <= 20:
-            errors.append('Number of travelers must be between 1 and 20')
-    except:
-        errors.append('Invalid number of travelers')
-    
-    # Validate accommodation
-    valid_accommodation = ['budget', 'standard', 'premium']
-    if data.get('accommodation') not in valid_accommodation:
-        errors.append('Invalid accommodation type')
-    
-    # Validate email
-    if not validate_email(data.get('email', '')):
-        errors.append('Invalid email address')
-    
-    # Validate phone number
-    try:
-        phone_number = phonenumbers.parse(data.get('mobile'), 'IN')
-        if not phonenumbers.is_valid_number(phone_number):
-            errors.append('Invalid phone number')
-    except:
-        errors.append('Invalid phone number format')
-    
+        age = int(data.get("age", 0))
+        if age < 18 or age > 120:
+            errors.append("Age must be between 18 and 120")
+    except (ValueError, TypeError):
+        errors.append("Valid age is required")
+
+    if not data.get("address"):
+        errors.append("Address is required")
+
+    if not data.get("idtype"):
+        errors.append("Government ID type is required")
+
+    if not data.get("idnumber"):
+        errors.append("Government ID number is required")
+
+    if not data.get("mobile"):
+        errors.append("Mobile number is required")
+    elif not re.match(r"^\d{10}$", str(data.get("mobile"))):
+        errors.append("Mobile number must be exactly 10 digits")
+
+    email = data.get("email")
+    if not email:
+        errors.append("Email is required")
+    elif not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+        errors.append("Invalid email format")
+
+    password = data.get("password")
+    if not password:
+        errors.append("Password is required")
+    elif len(password) < 6:
+        errors.append("Password must be at least 6 characters long")
+
     return errors

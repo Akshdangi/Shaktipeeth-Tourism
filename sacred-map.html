@@ -441,6 +441,12 @@
             line-height: 1.4;
         }
 
+        .leaflet-popup-content img {
+            border-radius: 6px;
+            margin-top: 8px;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+        }
+
         @media (max-width: 768px) {
             .nav {
                 flex-direction: column;
@@ -516,14 +522,14 @@
     <!-- ✅ DYNAMIC NAVBAR -->
     <nav class="nav">
         <div class="nav-links">
-            <a href="{{ url_for('home') }}" data-i18n="nav.home">Home</a>
-            <a href="{{ url_for('register') }}" data-i18n="nav.registration">Registration</a>
-            <a href="{{ url_for('about') }}" data-i18n="nav.about">About</a>
-            <a href="{{ url_for('donation') }}" data-i18n="nav.donations">Donations</a>
-            <a href="{{ url_for('book_tour_complete') }}" data-i18n="nav.booktour">Book Tour</a>
-            <a href="{{ url_for('sacred_map') }}" class="active">Sacred Map</a>
+            <a href="shaktipeeth-homepage.html" data-i18n="nav.home">Home</a>
+            <a href="shaktipeeth-registration.html" data-i18n="nav.registration">Registration</a>
+            <a href="about-page.html" data-i18n="nav.about">About</a>
+            <a href="donation-page.html" data-i18n="nav.donations">Donations</a>
+            <a href="book-tour-complete.html" data-i18n="nav.booktour">Book Tour</a>
+            <a href="sacred-map.html" class="active">Sacred Map</a>
         </div>
-        <a href="{{ url_for('login') }}" class="login-btn" data-i18n="nav.login">Login</a>
+        <a href="login.html" class="login-btn" data-i18n="nav.login">Login</a>
     </nav>
 
     <div class="map-container">
@@ -1331,6 +1337,6 @@
             checkAuthStatus();
         });
     </script>
-<script src="{{ url_for('static', filename='js/i18n.js') }}"></script>
+<script src="static/js/i18n.js"></script>
 </body>
 </html>

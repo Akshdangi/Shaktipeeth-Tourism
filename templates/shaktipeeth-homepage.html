@@ -3,230 +3,885 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Shaktipeeth Tourism - Divine Pilgrimage</title>
+  <title>Shaktipeeth Tourism</title>
+
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Arial', sans-serif;
-    }
+    * {margin:0;padding:0;box-sizing:border-box;font-family:Arial;}
 
-    body {
-      background: #f8f8f8;
-      color: #333;
-      overflow-x: hidden;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
+    body {background:#f8f8f8;display:flex;flex-direction:column;min-height:100vh;}
 
-    /* Header */
     .header {
       background: linear-gradient(135deg, #ff6b6b, #ff9472);
-      color: white;
-      padding: 2rem;
-      text-align: center;
-      font-size: 2.5rem;
-      font-weight: bold;
-      animation: fadeInDown 1s ease-in-out;
+      color:white;
+      padding:2rem;
+      text-align:center;
+      font-size:2rem;
     }
 
-    @keyframes fadeInDown {
-      from { opacity: 0; transform: translateY(-50px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Navbar */
     .nav {
-      background: #333;
-      padding: 1rem;
-      display: flex;
-      justify-content: center;
-      gap: 1.5rem;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      position: sticky;
-      top: 0;
-      z-index: 1200;
-      flex-wrap: wrap;
+      background:#333;
+      padding:1rem;
+      display:flex;
+      justify-content:center;
+      gap:1rem;
+      flex-wrap:wrap;
     }
 
     .nav a {
-      color: white;
-      text-decoration: none;
-      padding: 0.75rem 1.5rem;
-      border-radius: 5px;
-      transition: background 0.3s, transform 0.2s;
-      font-weight: bold;
+      color:white;
+      text-decoration:none;
+      padding:10px 15px;
+      border-radius:5px;
     }
 
-    .nav a:hover, .nav a.active {
-      background: #ff6b6b;
-      transform: scale(1.05);
-    }
+    .nav a:hover {background:#ff6b6b;}
 
-    /* Slider */
     .slider {
-      position: relative;
-      width: 100%;
-      height: 60vh;
-      min-height: 300px;
-      overflow: hidden;
+      height:60vh;
+      position:relative;
+      overflow:hidden;
     }
 
     .slide {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      opacity: 0;
-      transition: opacity 1s ease-in-out;
-      z-index: 0;
+      position:absolute;
+      width:100%;
+      height:100%;
+      opacity:0;
+      transition:1s;
     }
 
-    .slide.active {
-      opacity: 1;
-      z-index: 1;
-    }
+    .slide.active {opacity:1;}
 
     .slide img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transform: scale(1.05);
-      transition: transform 3s ease, opacity 1s ease-in-out;
+      width:100%;
+      height:100%;
+      object-fit:cover;
     }
 
-    .slide.active img {
-      transform: scale(1);
-    }
-
-    /* Content Layout */
     .content {
-      display: flex;
-      gap: 2rem;
-      padding: 2rem;
-      animation: fadeInUp 1s ease-in-out;
-      flex: 1;
+      display:flex;
+      gap:2rem;
+      padding:2rem;
+      flex:1;
     }
 
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(50px); }
-      to { opacity: 1; transform: translateY(0); }
+    .main-content, .sidebar {
+      background:white;
+      padding:1.5rem;
+      border-radius:8px;
+      box-shadow:0 4px 10px rgba(0,0,0,0.1);
     }
 
-    .main-content {
-      flex: 2;
-      text-align: justify;
-      background: white;
-      padding: 1.5rem;
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    }
+    .main-content {flex:2;}
+    .sidebar {flex:1;}
 
-    .sidebar {
-      flex: 1;
-      background: white;
-      padding: 1.5rem;
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    }
 
-    .sidebar ul li {
-      list-style: none;
-      margin: 10px 0;
-      transition: all 0.3s ease;
-    }
-
-    .sidebar ul li:hover {
-      transform: translateX(10px);
-      font-weight: bold;
-      color: #ff6b6b;
-    }
-
-    .sidebar ul li a {
-      color: inherit;
-      text-decoration: none;
-    }
 
     footer {
-      background: #333;
-      color: white;
-      text-align: center;
-      padding: 1.5rem;
-      margin-top: auto;
+      background:#333;
+      color:white;
+      text-align:center;
+      padding:1rem;
     }
 
-    @media (max-width: 768px) {
+    @media(max-width:768px){
       .content {
-        flex-direction: column;
+        flex-direction:column;
+        padding: 1rem;
+        gap: 1rem;
+      }
+      .slider {
+        height: 35vh;
+      }
+      .header {
+        font-size: 1.6rem;
+        padding: 1.5rem 1rem;
+      }
+      .nav {
+        overflow-x: auto;
+        white-space: nowrap;
+        justify-content: flex-start;
+        padding: 0.8rem;
+        gap: 0.5rem;
+        -webkit-overflow-scrolling: touch;
+      }
+      .nav::-webkit-scrollbar {
+        display: none;
+      }
+      .nav a {
+        padding: 8px 12px;
+        font-size: 0.9rem;
       }
     }
   </style>
 </head>
+
 <body>
-  <!-- Header -->
-  <header class="header">Shaktipeeth Tourism</header>
 
-  <!-- Navbar -->
- <nav class="nav">
-  <a href="{{ url_for('home') }}">Home</a>
-  <a href="{{ url_for('register') }}">Registration</a>
-  <a href="{{ url_for('about') }}">About Shaktipeeth</a>
-  <a href="{{ url_for('book_tour_complete') }}">Book Tour</a>
-  <a href="{{ url_for('sacred_map') }}">Sacred Map</a>
-  <a href="{{ url_for('login') }}">Login</a>
-  <a href="{{ url_for('donation') }}">Donations</a>
+<header class="header" data-i18n="home.title">Shaktipeeth Tourism</header>
+
+<nav class="nav">
+  <a href="{{ url_for('home') }}" data-i18n="nav.home">Home</a>
+  <a href="{{ url_for('register') }}" data-i18n="nav.registration">Registration</a>
+  <a href="{{ url_for('about') }}" data-i18n="nav.about">About</a>
+  <a href="{{ url_for('book_tour_complete') }}" data-i18n="nav.booktour">Book Tour</a>
+  <a href="{{ url_for('sacred_map') }}" data-i18n="nav.map">Map</a>
+  <a href="{{ url_for('donation') }}" data-i18n="nav.donations">Donations</a>
 </nav>
-  </nav>
 
- <section class="slider">
+<!-- Slider -->
+<section class="slider">
   <div class="slide active">
-    <img src="https://s7ap1.scene7.com/is/image/incredibleindia/kamakhya-temple-dispur-assam-2-attr-hero?qlt=82" 
-         alt="Kamakhya Temple, Assam">
+    <img src="https://s7ap1.scene7.com/is/image/incredibleindia/kamakhya-temple-dispur-assam-2-attr-hero?qlt=82">
   </div>
-
   <div class="slide">
-    <img src="{{ url_for('static', filename='naina-devi-temple.jpeg') }}" 
-         alt="Naina Devi Temple, Uttarakhand">
+    <img src="{{ url_for('static', filename='naina-devi-temple.jpeg') }}">
   </div>
 </section>
 
-  <!-- Main Content -->
-  <main class="content">
-    <section class="main-content">
-      <h2>Welcome to the Sacred Shaktipeeth Tourism</h2>
-      <p>Shakti Peethas are divine pilgrimage sites dedicated to Goddess Shakti. These holy temples mark the places where parts of Goddess Sati's body fell, making them significant to devotees worldwide.</p>
-      <p>Explore the spiritual essence of these sacred sites and embark on a transformative journey through history, devotion, and faith.</p>
-    </section>
-    <aside class="sidebar">
-      <h3>Quick Links</h3>
-      <ul>
-        <li><a href="#">View Tour Packages</a></li>
-        <li><a href="#">Temple Timings</a></li>
-        <li><a href="#">Accommodation</a></li>
-        <li><a href="#">Travel Guidelines</a></li>
-        <li><a href="#">Sacred Rituals</a></li>
-      </ul>
-    </aside>
-  </main>
+<!-- Content -->
+<main class="content">
+  <section class="main-content">
+    <h2>Welcome</h2>
+    <p>Explore sacred Shaktipeeth temples and plan your spiritual journey.</p>
+  </section>
 
-  <!-- Footer -->
-  <footer>© 2025 Shaktipeeth Tourism | All rights reserved.</footer>
+  <aside class="sidebar">
+    <h3 data-i18n="home.quicklinks">Quick Links</h3>
+    <ul>
+      <li>Tour Packages</li>
+      <li>Temple Timings</li>
+      <li>Accommodation</li>
+    </ul>
+  </aside>
+</main>
 
-  <!-- Slider Script -->
-  <script>
-    let currentSlide = 0;
-    const slides = document.querySelectorAll('.slide');
 
-    function nextSlide() {
-      slides[currentSlide].classList.remove('active');
-      currentSlide = (currentSlide + 1) % slides.length;
-      slides[currentSlide].classList.add('active');
+
+<footer>© 2025 Shaktipeeth Tourism</footer>
+
+<script>
+
+
+// Slider
+let i = 0;
+setInterval(() => {
+  let slides = document.querySelectorAll(".slide");
+  slides.forEach(s => s.classList.remove("active"));
+  i = (i + 1) % slides.length;
+  slides[i].classList.add("active");
+}, 4000);
+
+// Session auth check for navbar
+let userLoggedIn = false;
+let currentUserId = null;
+
+async function checkAuthStatus() {
+  try {
+    const isFlaskOrigin = window.location.port === '8000';
+    const statusUrl = isFlaskOrigin ? '/api/user-status' : 'http://127.0.0.1:8000/api/user-status';
+    const logoutUrl = isFlaskOrigin ? '/api/logout' : 'http://127.0.0.1:8000/api/logout';
+    
+    const response = await fetch(statusUrl, { credentials: 'include' });
+    if (!response.ok) return;
+    const data = await response.json();
+    
+    if (data.logged_in) {
+      userLoggedIn = true;
+      currentUserId = data.user?.id;
+      const nav = document.querySelector('.nav');
+      if (nav) {
+        const links = Array.from(nav.querySelectorAll('a'));
+        const loginLink = links.find(a => a.textContent.trim().toLowerCase() === 'login');
+        const regLink = links.find(a => a.textContent.trim().toLowerCase() === 'registration');
+        
+        if (loginLink) {
+          loginLink.textContent = 'Logout';
+          loginLink.href = isFlaskOrigin ? '/logout' : 'logout.html';
+        }
+        
+        if (regLink) {
+          regLink.textContent = `Welcome, ${data.user.name.split(' ')[0]}`;
+          regLink.href = '#';
+          regLink.style.pointerEvents = 'none';
+          regLink.style.opacity = '0.9';
+        }
+      }
+    }
+  } catch (error) {
+    console.error('Auth check error:', error);
+  }
+}
+document.addEventListener('DOMContentLoaded', checkAuthStatus);
+
+// Ensure popup login/register links point to correct routes depending on host
+document.addEventListener('DOMContentLoaded', () => {
+  const loginLink = document.getElementById('popupLoginLink');
+  const registerLink = document.getElementById('popupRegisterLink');
+  const port = window.location.port;
+  const isFlask = port === '8000' || port === '8001' || port === '5000';
+  if (loginLink) loginLink.href = isFlask ? '/login' : 'login.html';
+  if (registerLink) registerLink.href = isFlask ? '/register' : 'shaktipeeth-registration.html';
+});
+</script>
+
+<!-- Login Popup Modal for Chat -->
+<div class="login-popup-modal" id="loginPopupModal">
+  <div class="login-popup-content">
+    <button class="popup-close-btn" id="popupCloseBtn">&times;</button>
+    <div class="popup-icon">🔐</div>
+    <h3>Save Your Chat History</h3>
+    <p>Please login to save and access your conversation history with ShaktiGPT.</p>
+    <div class="popup-buttons">
+      <a href="/login" id="popupLoginLink" class="popup-btn login-btn">Login</a>
+      <a href="/register" id="popupRegisterLink" class="popup-btn register-btn">Register</a>
+    </div>
+    <p class="popup-footer">You can still chat without logging in, but your messages won't be saved.</p>
+  </div>
+</div>
+
+<!-- Floating Chat Trigger -->
+<button class="chat-trigger" id="chatTrigger" aria-label="Open Chat">
+  <svg viewBox="0 0 24 24">
+    <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/>
+  </svg>
+</button>
+
+<!-- Chat Widget -->
+<div class="chat-widget" id="chatWidget">
+  <div class="chat-header">
+    <div class="chat-header-title">
+      <h4>ShaktiGPT</h4>
+      <p>Online • Local AI Assistant</p>
+    </div>
+    <button class="chat-close-btn" id="chatCloseBtn">&times;</button>
+  </div>
+  
+  <div class="chat-messages" id="chatMessages">
+    <div class="message bot">
+      Jai Mata Di! 🙏 I am **ShaktiGPT**, your spiritual guide. How can I help you explore the sacred Shakti Peethas today?
+    </div>
+  </div>
+
+  <div class="chat-suggestions">
+    <div class="suggestion-chip" onclick="sendSuggestion('Suggest popular North temples')">Suggest North Temples</div>
+    <div class="suggestion-chip" onclick="sendSuggestion('Mythology of Kamakhya')">Mythology of Kamakhya</div>
+    <div class="suggestion-chip" onclick="sendSuggestion('Vaishno Devi travel cost')">Vaishno Devi cost</div>
+    <div class="suggestion-chip" onclick="sendSuggestion('Temples to visit in Winter')">Winter Peethas</div>
+  </div>
+
+  <div class="chat-input-container">
+    <input type="text" class="chat-input" id="chatInput" placeholder="Ask about Shaktipeeths..." autocomplete="off">
+    <button class="chat-send-btn" id="chatSendBtn">
+      <svg viewBox="0 0 24 24">
+        <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+      </svg>
+    </button>
+  </div>
+</div>
+
+<style>
+    /* --- PREMIUM SHAKTI GPT CHATBOT WIDGET --- */
+    .chat-trigger {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ff6b6b, #ffb900);
+      box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+      border: none;
+      cursor: pointer;
+      z-index: 1000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .chat-trigger:hover {
+      transform: scale(1.1) rotate(15deg);
+      box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
+    }
+    .chat-trigger svg {
+      width: 28px;
+      height: 28px;
+      fill: white;
     }
 
-    setInterval(nextSlide, 5000); // slide every 5s
-  </script>
+    .chat-widget {
+      position: fixed;
+      bottom: 100px;
+      right: 25px;
+      width: 380px;
+      height: 520px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      z-index: 1000;
+      overflow: hidden;
+      transform: translateY(20px) scale(0.95);
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .chat-widget.active {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .chat-header {
+      background: linear-gradient(135deg, #ff6b6b, #ff9472);
+      color: white;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+    .chat-header-title {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+    }
+    .chat-header-title h4 {
+      margin: 0;
+      font-size: 1.1rem;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+    }
+    .chat-header-title p {
+      margin: 2px 0 0 0;
+      font-size: 0.75rem;
+      opacity: 0.9;
+    }
+    .chat-close-btn {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      opacity: 0.8;
+      transition: opacity 0.2s;
+      line-height: 1;
+    }
+    .chat-close-btn:hover {
+      opacity: 1;
+    }
+
+    .chat-messages {
+      flex: 1;
+      padding: 15px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      background: rgba(248, 248, 248, 0.6);
+      scrollbar-width: thin;
+      scrollbar-color: rgba(0,0,0,0.1) transparent;
+    }
+    .chat-messages::-webkit-scrollbar {
+      width: 6px;
+    }
+    .chat-messages::-webkit-scrollbar-thumb {
+      background-color: rgba(0,0,0,0.1);
+      border-radius: 3px;
+    }
+    .message {
+      max-width: 85%;
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      line-height: 1.4;
+      word-wrap: break-word;
+      animation: messageFadeIn 0.3s ease-out;
+      text-align: left;
+    }
+    @keyframes messageFadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .message.user {
+      background: linear-gradient(135deg, #ff6b6b, #ff826b);
+      color: white;
+      align-self: flex-end;
+      border-bottom-right-radius: 2px;
+      box-shadow: 0 2px 8px rgba(255, 107, 107, 0.2);
+    }
+    .message.bot {
+      background: white;
+      color: #333;
+      align-self: flex-start;
+      border-bottom-left-radius: 2px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+    .message.error {
+      background: #fde8e8;
+      color: #9b1c1c;
+      align-self: center;
+      text-align: center;
+      border-radius: 8px;
+      border: 1px solid #f8b4b4;
+      max-width: 90%;
+    }
+
+    .chat-suggestions {
+      display: flex;
+      gap: 8px;
+      padding: 10px 15px;
+      overflow-x: auto;
+      background: white;
+      border-top: 1px solid #f0f0f0;
+      scrollbar-width: none;
+    }
+    .chat-suggestions::-webkit-scrollbar {
+      display: none;
+    }
+    .suggestion-chip {
+      background: #fdf0ee;
+      color: #e55a5a;
+      border: 1px solid #fbdad6;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+      font-weight: 500;
+    }
+    .suggestion-chip:hover {
+      background: #ff6b6b;
+      color: white;
+      border-color: #ff6b6b;
+    }
+
+    .chat-input-container {
+      display: flex;
+      padding: 10px 15px;
+      background: white;
+      border-top: 1px solid #f0f0f0;
+      gap: 10px;
+      align-items: center;
+    }
+    .chat-input {
+      flex: 1;
+      border: 1px solid #e0e0e0;
+      padding: 10px 16px;
+      border-radius: 24px;
+      outline: none;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+    }
+    .chat-input:focus {
+      border-color: #ff6b6b;
+      box-shadow: 0 0 5px rgba(255, 107, 107, 0.2);
+    }
+    .chat-send-btn {
+      background: linear-gradient(135deg, #ff6b6b, #ff9472);
+      border: none;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      color: white;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 2px 6px rgba(255, 107, 107, 0.3);
+    }
+    .chat-send-btn:hover {
+      transform: scale(1.08);
+      box-shadow: 0 4px 10px rgba(255, 107, 107, 0.4);
+    }
+    .chat-send-btn svg {
+      width: 18px;
+      height: 18px;
+      fill: white;
+    }
+
+    .typing-indicator {
+      display: flex;
+      gap: 5px;
+      padding: 12px 16px;
+      background: white;
+      border-radius: 12px;
+      align-self: flex-start;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      animation: messageFadeIn 0.3s ease-out;
+      margin-bottom: 5px;
+    }
+    .typing-dot {
+      width: 6px;
+      height: 6px;
+      background: #ff6b6b;
+      border-radius: 50%;
+      animation: typingBounce 1.4s infinite ease-in-out both;
+    }
+    .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+    .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+    @keyframes typingBounce {
+      0%, 80%, 100% { transform: scale(0); }
+      40% { transform: scale(1); }
+    }
+
+    /* --- LOGIN POPUP MODAL --- */
+    .login-popup-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .login-popup-modal.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    .login-popup-content {
+      background: white;
+      border-radius: 16px;
+      padding: 40px 30px;
+      box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+      max-width: 400px;
+      text-align: center;
+      position: relative;
+      animation: popupSlideIn 0.3s ease-out;
+    }
+    @keyframes popupSlideIn {
+      from {
+        transform: translateY(-50px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .popup-close-btn {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: #999;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .popup-close-btn:hover {
+      color: #333;
+    }
+
+    .popup-icon {
+      font-size: 3rem;
+      margin-bottom: 15px;
+    }
+
+    .login-popup-content h3 {
+      font-size: 1.5rem;
+      color: #333;
+      margin: 15px 0 10px 0;
+      font-weight: 600;
+    }
+
+    .login-popup-content p {
+      color: #666;
+      font-size: 0.95rem;
+      margin: 10px 0 20px 0;
+      line-height: 1.5;
+    }
+
+    .popup-buttons {
+      display: flex;
+      gap: 12px;
+      margin: 25px 0 20px 0;
+    }
+
+    .popup-btn {
+      flex: 1;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+      display: inline-block;
+    }
+
+    .popup-btn.login-btn {
+      background: linear-gradient(135deg, #ff6b6b, #ff9472);
+      color: white;
+    }
+    .popup-btn.login-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(255, 107, 107, 0.3);
+    }
+
+    .popup-btn.register-btn {
+      background: #f0f0f0;
+      color: #333;
+      border: 2px solid #e0e0e0;
+    }
+    .popup-btn.register-btn:hover {
+      background: #e8e8e8;
+      border-color: #ff6b6b;
+      color: #ff6b6b;
+    }
+
+    .popup-footer {
+      font-size: 0.85rem;
+      color: #999;
+      margin-top: 15px;
+      font-style: italic;
+    }
+
+    @media (max-width: 500px) {
+      .chat-widget {
+        right: 10px;
+        left: 10px;
+        width: calc(100% - 20px);
+        height: calc(100% - 140px);
+        bottom: 90px;
+      }
+    }
+</style>
+
+<script>
+const trigger = document.getElementById('chatTrigger');
+const widget = document.getElementById('chatWidget');
+const closeBtn = document.getElementById('chatCloseBtn');
+const chatMessages = document.getElementById('chatMessages');
+const chatInput = document.getElementById('chatInput');
+const sendBtn = document.getElementById('chatSendBtn');
+
+// Chat auto-delete timer for non-logged-in users
+let chatIdleTimer = null;
+const CHAT_TIMEOUT_MS = 10 * 60 * 1000; // 10 minutes
+let lastChatActivityTime = Date.now();
+
+// Reset the idle timer on user activity
+function resetChatIdleTimer() {
+  if (userLoggedIn) return; // Don't apply timeout to logged-in users
+
+  lastChatActivityTime = Date.now();
+  
+  if (chatIdleTimer) clearTimeout(chatIdleTimer);
+  
+  chatIdleTimer = setTimeout(() => {
+    if (!userLoggedIn && chatMessages.children.length > 1) {
+      clearChatHistory();
+    }
+  }, CHAT_TIMEOUT_MS);
+}
+
+// Clear chat history and show warning
+function clearChatHistory() {
+  // Keep only the initial bot greeting
+  const messages = chatMessages.querySelectorAll('.message');
+  messages.forEach((msg, index) => {
+    if (index > 0) msg.remove();
+  });
+  
+  // Show auto-delete notification
+  const notificationDiv = document.createElement('div');
+  notificationDiv.classList.add('message', 'bot');
+  notificationDiv.style.backgroundColor = '#fff3cd';
+  notificationDiv.style.color = '#856404';
+  notificationDiv.style.border = '1px solid #ffc107';
+  notificationDiv.innerHTML = '⏰ <strong>Chat cleared:</strong> Your conversation was automatically deleted after 10 minutes of inactivity for privacy. <a href="login.html" style="color: #ff6b6b; text-decoration: underline;">Login</a> to save your chat history.';
+  chatMessages.appendChild(notificationDiv);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+// Toggle chat widget
+trigger.addEventListener('click', () => {
+  widget.classList.toggle('active');
+  if (widget.classList.contains('active')) {
+    chatInput.focus();
+    resetChatIdleTimer();
+  }
+});
+
+closeBtn.addEventListener('click', () => {
+  widget.classList.remove('active');
+});
+
+// Render message in chat area
+function appendMessage(text, sender) {
+  const msgDiv = document.createElement('div');
+  msgDiv.classList.add('message', sender);
+  
+  // Basic markdown parsing for bold text and linebreaks
+  let formattedText = text
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+    .replace(/\n/g, '<br>');
+    
+  msgDiv.innerHTML = formattedText;
+  chatMessages.appendChild(msgDiv);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+  
+  // Reset idle timer on every message (only for non-logged-in users)
+  if (!userLoggedIn) {
+    resetChatIdleTimer();
+  }
+}
+
+// Show/hide typing indicator
+let typingIndicator = null;
+function showTypingIndicator() {
+  if (typingIndicator) return;
+  typingIndicator = document.createElement('div');
+  typingIndicator.classList.add('typing-indicator');
+  typingIndicator.innerHTML = `
+    <div class="typing-dot"></div>
+    <div class="typing-dot"></div>
+    <div class="typing-dot"></div>
+  `;
+  chatMessages.appendChild(typingIndicator);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+function hideTypingIndicator() {
+  if (typingIndicator) {
+    typingIndicator.remove();
+    typingIndicator = null;
+  }
+}
+
+// Send message to Flask API
+async function sendMessage() {
+  const text = chatInput.value.trim();
+  if (!text) return;
+
+  // Show login popup if not logged in (but allow chatting)
+  if (!userLoggedIn) {
+    showLoginPopup();
+  }
+
+  // Clear input and append user message
+  chatInput.value = '';
+  appendMessage(text, 'user');
+
+  // Show typing indicator
+  showTypingIndicator();
+
+  try {
+    // Always use the current window's port for API calls
+    const apiUrl = `${window.location.protocol}//${window.location.hostname}:${window.location.port}/api/chat`;
+    const res = await fetch(apiUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ message: text }),
+      credentials: 'include'
+    });
+
+    const data = await res.json();
+    hideTypingIndicator();
+
+    if (data.success) {
+      appendMessage(data.reply, 'bot');
+      
+      // Save chat to database if user is logged in
+      if (userLoggedIn) {
+        await saveChatMessage(text, data.reply);
+      }
+    } else {
+      appendMessage(data.error || 'Something went wrong. Please check your Ollama connection.', 'error');
+    }
+  } catch (err) {
+    hideTypingIndicator();
+    appendMessage('Unable to reach the server. Make sure the server and local Ollama are running.', 'error');
+  }
+}
+
+// Save chat message to database
+async function saveChatMessage(userMessage, assistantReply) {
+  try {
+    // Always use the current window's port for API calls
+    const saveUrl = `${window.location.protocol}//${window.location.hostname}:${window.location.port}/api/save-chat`;
+    await fetch(saveUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        user_message: userMessage,
+        assistant_reply: assistantReply
+      }),
+      credentials: 'include'
+    });
+  } catch (err) {
+    console.error('Failed to save chat:', err);
+  }
+}
+
+// Show login popup
+function showLoginPopup() {
+  const modal = document.getElementById('loginPopupModal');
+  if (modal) {
+    modal.classList.add('active');
+  }
+}
+
+// Hide login popup
+function hideLoginPopup() {
+  const modal = document.getElementById('loginPopupModal');
+  if (modal) {
+    modal.classList.remove('active');
+  }
+}
+
+// Setup login popup close button
+const popupCloseBtn = document.getElementById('popupCloseBtn');
+if (popupCloseBtn) {
+  popupCloseBtn.addEventListener('click', hideLoginPopup);
+}
+
+// Close popup when clicking outside
+window.addEventListener('click', (event) => {
+  const modal = document.getElementById('loginPopupModal');
+  if (event.target === modal) {
+    hideLoginPopup();
+  }
+});
+
+// Event Listeners for Input
+sendBtn.addEventListener('click', sendMessage);
+chatInput.addEventListener('keypress', (e) => {
+  if (e.key === 'Enter') {
+    sendMessage();
+  }
+});
+
+// Trigger suggestions
+function sendSuggestion(text) {
+  chatInput.value = text;
+  sendMessage();
+}
+</script>
+
+<script src="{{ url_for('static', filename='js/i18n.js') }}"></script>
 </body>
 </html>
-
-//To run this Project "python app.py"

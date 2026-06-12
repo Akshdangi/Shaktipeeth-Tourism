@@ -95,7 +95,7 @@
             </div>
 
             <button type="submit" class="submit-btn" data-i18n="login.btn">Login</button>
-            <p style="margin-top: 0.5rem; text-align: center; font-size: 0.9rem; color: #555;">Don't have an account? <a href="/register" id="registerLink" data-i18n="login.registerhere">Register here</a></p>
+            <p style="margin-top: 0.5rem; text-align: center; font-size: 0.9rem; color: #555;">Don't have an account? <a href="shaktipeeth-registration.html" id="registerLink" data-i18n="login.registerhere">Register here</a></p>
         </form>
     </div>
     
@@ -126,6 +126,7 @@
             
             try {
                 const apiUrl = getApiUrl('/api/login');
+                console.log('📤 Logging in to:', apiUrl);
                 
                 const response = await fetch(apiUrl, {
                     method: 'POST',
@@ -140,12 +141,13 @@
                 });
                 
                 const data = await response.json();
+                console.log('📥 Server response:', data);
                 
                 if (!response.ok) {
                     throw new Error(data.message || 'Login failed');
                 }
                 
-                console.log('✅ Login successful:', data);
+                console.log('✅ Login successful');
                 window.location.href = isFlaskApp ? '/' : 'shaktipeeth-homepage.html';
             } catch (error) {
                 console.error('❌ Login error:', error);
@@ -160,7 +162,7 @@
             console.error('❌ Login form not found');
         }
     </script>
-<script src="{{ url_for('static', filename='js/i18n.js') }}"></script>
+<script src="static/js/i18n.js"></script>
 </body>
 </html>
  
