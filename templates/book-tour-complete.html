@@ -275,10 +275,7 @@
         };
 
         try {
-            const isFlaskOrigin = window.location.port === '8000';
-            const apiUrl = isFlaskOrigin ? '/api/book' : 'http://127.0.0.1:8000/api/book';
-
-            const res = await fetch(apiUrl, {
+            const res = await fetch('/api/book', {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 credentials: 'include',
@@ -292,12 +289,15 @@
                 form.reset();
                 // Retain user details from the session
                 checkAuthAndRedirect();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             } else {
-                alert("Error: " + result.message);
+                const errMsg = result.errors ? result.errors.join(', ') : (result.message || 'Booking failed');
+                alert("Booking Error: " + errMsg);
             }
 
         } catch (err) {
-            alert("Server error");
+            console.error('Booking error:', err);
+            alert("Server error. Please try again.");
         }
     });
 </script>
