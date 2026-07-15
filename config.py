@@ -20,11 +20,11 @@ class Config:
     SESSION_COOKIE_HTTPONLY = True
     SESSION_COOKIE_SAMESITE = "Lax"
 
-    # Mail (safe defaults)
+    # Mail configuration (uses local defaults if env vars are missing on Render)
     MAIL_SERVER = os.environ.get("MAIL_SERVER", "smtp.gmail.com")
     MAIL_PORT = int(os.environ.get("MAIL_PORT", 587))
     MAIL_USE_TLS = True
-    MAIL_USERNAME = os.environ.get("MAIL_USERNAME")
-    MAIL_PASSWORD = os.environ.get("MAIL_PASSWORD")
+    MAIL_USERNAME = os.environ.get("MAIL_USERNAME", "jasolaaksh@gmail.com")
+    MAIL_PASSWORD = os.environ.get("MAIL_PASSWORD", "uddymzrgolqhkrux")
     # URL for Ollama or external LLM API (default to local Ollama)
     OLLAMA_API_URL = os.environ.get("OLLAMA_API_URL", "http://localhost:11434/api/chat")
