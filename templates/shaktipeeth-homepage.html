@@ -178,11 +178,7 @@ let currentUserId = null;
 
 async function checkAuthStatus() {
   try {
-    const isFlaskOrigin = window.location.port === '8000';
-    const statusUrl = isFlaskOrigin ? '/api/user-status' : 'http://127.0.0.1:8000/api/user-status';
-    const logoutUrl = isFlaskOrigin ? '/api/logout' : 'http://127.0.0.1:8000/api/logout';
-    
-    const response = await fetch(statusUrl, { credentials: 'include' });
+    const response = await fetch('/api/user-status', { credentials: 'include' });
     if (!response.ok) return;
     const data = await response.json();
     
@@ -784,9 +780,7 @@ async function sendMessage() {
   showTypingIndicator();
 
   try {
-    // Always use the current window's port for API calls
-    const apiUrl = `${window.location.protocol}//${window.location.hostname}:${window.location.port}/api/chat`;
-    const res = await fetch(apiUrl, {
+    const res = await fetch('/api/chat', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -817,9 +811,7 @@ async function sendMessage() {
 // Save chat message to database
 async function saveChatMessage(userMessage, assistantReply) {
   try {
-    // Always use the current window's port for API calls
-    const saveUrl = `${window.location.protocol}//${window.location.hostname}:${window.location.port}/api/save-chat`;
-    await fetch(saveUrl, {
+    await fetch('/api/save-chat', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

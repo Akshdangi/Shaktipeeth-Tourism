@@ -468,10 +468,7 @@
     <script>
         async function checkAuthStatus() {
             try {
-                const isFlaskOrigin = window.location.port === '8000';
-                const statusUrl = isFlaskOrigin ? '/api/user-status' : 'http://127.0.0.1:8000/api/user-status';
-                
-                const response = await fetch(statusUrl, { credentials: 'include' });
+                const response = await fetch('/api/user-status', { credentials: 'include' });
                 if (!response.ok) return;
                 const data = await response.json();
 

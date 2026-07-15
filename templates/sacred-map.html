@@ -570,12 +570,9 @@
         let map;
         const markers = {};
 
-        // Helper to check environment
-        const isFlaskOrigin = window.location.port === '8000';
-
-        // Get absolute static image path based on environment
+        // Get absolute static image path
         function getImagePath(fileName) {
-            return isFlaskOrigin ? `/static/${fileName}` : `static/${fileName}`;
+            return `/static/${fileName}`;
         }
 
         // Detailed Temple Dataset - 29 Sacred Temples
@@ -1287,9 +1284,7 @@
         // Navbar Session Integration
         async function checkAuthStatus() {
             try {
-                const statusUrl = isFlaskOrigin ? '/api/user-status' : 'http://127.0.0.1:8000/api/user-status';
-                
-                const response = await fetch(statusUrl, { credentials: 'include' });
+                const response = await fetch('/api/user-status', { credentials: 'include' });
                 if (!response.ok) return;
                 const data = await response.json();
 
