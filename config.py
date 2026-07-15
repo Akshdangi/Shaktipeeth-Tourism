@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 class Config:
-    SECRET_KEY = os.environ.get("SECRET_KEY", "dev-secret-key")
+    SECRET_KEY = os.environ.get("SECRET_KEY", "shaktipeeth-secret-2024-xK9mP")
 
     # Fix for Render PostgreSQL
     db_url = os.environ.get("DATABASE_URL")
@@ -14,6 +14,11 @@ class Config:
 
     SQLALCHEMY_DATABASE_URI = db_url or "sqlite:///shaktipeeth.db"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+    # Session cookie settings — required for Render (HTTPS)
+    SESSION_COOKIE_SECURE = os.environ.get("RENDER", False)  # True on Render, False locally
+    SESSION_COOKIE_HTTPONLY = True
+    SESSION_COOKIE_SAMESITE = "Lax"
 
     # Mail (safe defaults)
     MAIL_SERVER = os.environ.get("MAIL_SERVER", "smtp.gmail.com")
