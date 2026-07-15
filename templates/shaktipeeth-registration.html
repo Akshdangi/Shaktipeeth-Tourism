@@ -61,10 +61,36 @@
       cursor: pointer;
       width: 100%;
       font-size: 1.1rem;
+      transition: background 0.2s;
     }
 
-    .submit-btn:hover {
+    .submit-btn:hover:not(:disabled) {
       background: #ff5252;
+    }
+
+    .submit-btn:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+
+    .msg-box {
+      padding: 0.85rem 1rem;
+      border-radius: 6px;
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+      display: none;
+    }
+    .msg-box.success {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+      display: block;
+    }
+    .msg-box.error {
+      background: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+      display: block;
     }
 
     .required {
@@ -135,82 +161,76 @@
         <input type="password" id="password" name="password" required placeholder="Choose a password (min 6 characters)" />
       </div>
 
-      <button type="submit" class="submit-btn" data-i18n="reg.register">Register</button>
+      <div id="regMsg" class="msg-box"></div>
+      <button type="submit" id="regBtn" class="submit-btn" data-i18n="reg.register">Register</button>
+      <p style="margin-top:0.8rem;text-align:center;font-size:0.9rem;color:#555;">Already have an account? <a href="/login">Login here</a></p>
     </form>
   </main>
 
   <script>
-    // Detect if we're on Flask origin or static file
-    const isFlaskApp = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-    const port = window.location.port;
-    const protocol = window.location.protocol;
-    
-    // Get proper API URL
-    function getApiUrl(endpoint) {
-        if (isFlaskApp && (port === '8000' || port === '8001' || port === '5000')) {
-            return `${protocol}//${window.location.hostname}:${port}${endpoint}`;
-        }
-        return endpoint;
+    const regForm = document.querySelector('.registration-form');
+    const regBtn  = document.getElementById('regBtn');
+    const msgBox  = document.getElementById('regMsg');
+
+    function showMsg(type, text) {
+      msgBox.className = 'msg-box ' + type;
+      msgBox.textContent = text;
+      msgBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function setLoading(loading) {
+      regBtn.disabled = loading;
+      regBtn.textContent = loading ? 'Registering...' : 'Register';
     }
 
     const handleSubmit = async (event) => {
       event.preventDefault();
+      msgBox.className = 'msg-box'; // reset
 
+      const form     = event.currentTarget;  // safe reference before async
       const fullname = document.getElementById('fullname').value.trim();
-      const age = document.getElementById('age').value;
-      const address = document.getElementById('address').value.trim();
-      const idtype = document.getElementById('idtype').value;
+      const age      = document.getElementById('age').value;
+      const address  = document.getElementById('address').value.trim();
+      const idtype   = document.getElementById('idtype').value;
       const idnumber = document.getElementById('idnumber').value.trim();
-      const mobile = document.getElementById('mobile').value.trim();
-      const email = document.getElementById('email').value.trim();
+      const mobile   = document.getElementById('mobile').value.trim();
+      const email    = document.getElementById('email').value.trim();
       const password = document.getElementById('password').value;
 
       if (!fullname || !age || !address || !idtype || !idnumber || !mobile || !email || !password) {
-        alert('Please fill all required fields');
+        showMsg('error', 'Please fill all required fields.');
         return;
       }
 
-      try {
-        const apiUrl = getApiUrl('/api/register');
-        console.log('📤 Registering to:', apiUrl);
+      setLoading(true);
 
-        const response = await fetch(apiUrl, {
+      try {
+        const response = await fetch('/api/register', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: { 'Content-Type': 'application/json' },
           credentials: 'include',
-          body: JSON.stringify({
-            fullname: fullname,
-            age: age,
-            address: address,
-            idtype: idtype,
-            idnumber: idnumber,
-            mobile: mobile,
-            email: email,
-            password: password
-          })
+          body: JSON.stringify({ fullname, age, address, idtype, idnumber, mobile, email, password })
         });
 
         const data = await response.json();
         console.log('📥 Server response:', data);
 
         if (!response.ok) {
-          const errMsg = data.errors ? data.errors.join('\n') : (data.message || 'Registration failed');
+          const errMsg = data.errors ? data.errors.join(' | ') : (data.message || 'Registration failed');
           throw new Error(errMsg);
         }
 
-        console.log('✅ Registration successful');
-        alert('Registration successful! Redirecting to login...');
-        event.target.reset();
-        window.location.href = isFlaskApp ? '/login' : 'login.html';
+        showMsg('success', '✅ Registration successful! Redirecting to login...');
+        form.reset();
+        setTimeout(() => { window.location.href = '/login'; }, 1500);
+
       } catch (error) {
         console.error('❌ Registration error:', error);
-        alert('Registration Error: ' + error.message);
+        showMsg('error', '❌ ' + error.message);
+        setLoading(false);
       }
-    }
+    };
 
-    const regForm = document.querySelector('.registration-form');
     if (regForm) {
       regForm.addEventListener('submit', handleSubmit);
     } else {

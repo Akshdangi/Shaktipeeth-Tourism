@@ -172,23 +172,19 @@
     </div>
 
     <script>
-        // Check if running on Flask backend or statically
-        const isFlaskOrigin = window.location.port === '8000';
-        
-        // Setup dynamic links based on origin
-        document.getElementById('loginAgainBtn').href = isFlaskOrigin ? '/login' : 'login.html';
-        document.getElementById('homeBtn').href = isFlaskOrigin ? '/' : 'shaktipeeth-homepage.html';
+        // Always use Flask routes — this template is always served by Flask
+        document.getElementById('loginAgainBtn').href = '/login';
+        document.getElementById('homeBtn').href = '/';
 
-        // Auto trigger API logout just to ensure session is cleared on server side
+        // Clear session on server side
         async function performApiLogout() {
             try {
-                const logoutUrl = isFlaskOrigin ? '/api/logout' : 'http://127.0.0.1:8000/api/logout';
-                await fetch(logoutUrl, { method: 'POST', credentials: 'include' });
+                await fetch('/api/logout', { method: 'POST', credentials: 'include' });
             } catch (err) {
-                console.error('API logout check error:', err);
+                console.error('API logout error:', err);
             }
         }
-        
+
         document.addEventListener('DOMContentLoaded', performApiLogout);
     </script>
 <script src="{{ url_for('static', filename='js/i18n.js') }}"></script>

@@ -129,20 +129,16 @@
     <script>
         async function checkAuthAndRedirect() {
             try {
-                const isFlaskOrigin = window.location.port === '8000';
-                const statusUrl = isFlaskOrigin ? '/api/user-status' : 'http://127.0.0.1:8000/api/user-status';
-                const loginPageUrl = isFlaskOrigin ? '/login' : 'login.html';
-                
-                const response = await fetch(statusUrl, { credentials: 'include' });
+                const response = await fetch('/api/user-status', { credentials: 'include' });
                 if (!response.ok) {
                     alert("To book a tour, you must log in first!");
-                    window.location.href = loginPageUrl;
+                    window.location.href = '/login';
                     return;
                 }
                 const data = await response.json();
                 if (!data.logged_in) {
                     alert("To book a tour, you must log in first!");
-                    window.location.href = loginPageUrl;
+                    window.location.href = '/login';
                     return;
                 }
 
@@ -152,12 +148,12 @@
                     const links = Array.from(nav.querySelectorAll('a'));
                     const loginLink = links.find(a => a.textContent.trim().toLowerCase() === 'login' || a.classList.contains('btn'));
                     const regLink = links.find(a => a.textContent.trim().toLowerCase() === 'registration');
-                    
+
                     if (loginLink) {
                         loginLink.textContent = 'Logout';
-                        loginLink.href = isFlaskOrigin ? '/logout' : 'logout.html';
+                        loginLink.href = '/logout';
                     }
-                    
+
                     if (regLink) {
                         regLink.textContent = `Welcome, ${data.user.name.split(' ')[0]}`;
                         regLink.href = '#';
@@ -176,10 +172,8 @@
 
             } catch (error) {
                 console.error("Auth check failed:", error);
-                const isFlaskOrigin = window.location.port === '8000';
-                const loginPageUrl = isFlaskOrigin ? '/login' : 'login.html';
                 alert("To book a tour, you must log in first!");
-                window.location.href = loginPageUrl;
+                window.location.href = '/login';
             }
         }
         document.addEventListener("DOMContentLoaded", checkAuthAndRedirect);

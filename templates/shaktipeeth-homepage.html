@@ -197,7 +197,7 @@ async function checkAuthStatus() {
         
         if (loginLink) {
           loginLink.textContent = 'Logout';
-          loginLink.href = isFlaskOrigin ? '/logout' : 'logout.html';
+          loginLink.href = '/logout';
         }
         
         if (regLink) {
@@ -214,14 +214,12 @@ async function checkAuthStatus() {
 }
 document.addEventListener('DOMContentLoaded', checkAuthStatus);
 
-// Ensure popup login/register links point to correct routes depending on host
+// Ensure popup login/register links point to correct Flask routes
 document.addEventListener('DOMContentLoaded', () => {
   const loginLink = document.getElementById('popupLoginLink');
   const registerLink = document.getElementById('popupRegisterLink');
-  const port = window.location.port;
-  const isFlask = port === '8000' || port === '8001' || port === '5000';
-  if (loginLink) loginLink.href = isFlask ? '/login' : 'login.html';
-  if (registerLink) registerLink.href = isFlask ? '/register' : 'shaktipeeth-registration.html';
+  if (loginLink) loginLink.href = '/login';
+  if (registerLink) registerLink.href = '/register';
 });
 </script>
 

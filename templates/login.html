@@ -100,53 +100,33 @@
     </div>
     
     <script>
-        // Detect if we're on Flask origin or static file
-        const isFlaskApp = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-        const port = window.location.port;
-        const protocol = window.location.protocol;
-        
-        // Get proper API URL
-        function getApiUrl(endpoint) {
-            if (isFlaskApp && (port === '8000' || port === '8001' || port === '5000')) {
-                return `${protocol}//${window.location.hostname}:${port}${endpoint}`;
-            }
-            return endpoint;
-        }
-
         const handleLogin = async (event) => {
             event.preventDefault();
-            
+
             const emailInput = document.getElementById('email').value.trim();
             const passwordInput = document.getElementById('password').value;
-            
+
             if (!emailInput || !passwordInput) {
                 alert('Please enter both email and password');
                 return;
             }
-            
+
             try {
-                const apiUrl = getApiUrl('/api/login');
-                
-                const response = await fetch(apiUrl, {
+                const response = await fetch('/api/login', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     credentials: 'include',
-                    body: JSON.stringify({
-                        email: emailInput,
-                        password: passwordInput
-                    })
+                    body: JSON.stringify({ email: emailInput, password: passwordInput })
                 });
-                
+
                 const data = await response.json();
-                
+
                 if (!response.ok) {
                     throw new Error(data.message || 'Login failed');
                 }
-                
+
                 console.log('✅ Login successful:', data);
-                window.location.href = isFlaskApp ? '/' : 'shaktipeeth-homepage.html';
+                window.location.href = '/';
             } catch (error) {
                 console.error('❌ Login error:', error);
                 alert('Login Error: ' + error.message);
